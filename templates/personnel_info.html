@@ -1,0 +1,49 @@
+{% extends 'index.html' %}
+
+{% block main-content %}
+    <fieldset class="layui-elem-field">
+        <legend>个人信息</legend>
+        <div class="layui-field-box">
+            <div class="layui-form">
+                <table class="layui-table">
+                    <colgroup>
+                        <col width="10" class="layui-bg-gray">
+                        <col width="600">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <td>姓名</td>
+                        <td>{{ usr_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>性别</td>
+                        <td>{{ gender }}</td>
+                    </tr>
+                    <tr>
+                        <td>邮箱</td>
+                        <td>{{ email }}</td>
+                    </tr>
+                    <tr>
+                        <td>学号</td>
+                        <td>{{ uid }}</td>
+                    </tr>
+                    <tr>
+                        <td>学院</td>
+                        <td>{{ faculty }}</td>
+                    </tr>
+                    {% if usr_type == 'student' %}
+                        <tr>
+                            <td>年级</td>
+                            <td>{{ grade }}</td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <td>个人信息</td>
+                        <td>{{ info }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </fieldset>
+{% endblock %}
