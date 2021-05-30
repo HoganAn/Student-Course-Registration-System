@@ -38,8 +38,33 @@ def get_selectable_courses(request):
             'count': total,
             'data': course_info
         }
-
         return JsonResponse(data, safe=False)
+    else:
+        return HttpResponse(status=405)
+
+
+def get_select_stat(request):
+    if request.method == 'GET':
+        uid = request.session.get('uid')
+        courses = Course.objects.filter(reg_stat__uid=uid)
+        course_list = []
+        for c in courses:
+            stat = CourseRegistration.objects.get(course__course_id=c.course_id).is_joined
+            data = {
+                'cid': c.course_id,
+                'cname': c.course_name,
+                'fname': c.faculty,
+                'tname': c.lecturer.name,
+                'cstat': stat
+            }
+            course_list.append(data)
+        data = {
+            'code': 0,
+            'data': course_list
+        }
+        return JsonResponse(data)
+    else:
+        return HttpResponse(status=405)
 
 
 def course_selected(request):
@@ -49,9 +74,6 @@ def course_selected(request):
         course = Course.objects.get(course_id=cid)
         stu = Student.objects.get(uid=uid)
         course.reg_stat.add(stu, through_defaults={'is_joined': '0'})
-        # CourseRegistration.objects.create(stu=uid, course=cid, is_joined=0)
         return HttpResponse('success')
-        # return render(request, "course_select.html")
-
     else:
         return HttpResponse(status=405)
