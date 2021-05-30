@@ -5,10 +5,74 @@
 {% endblock %}
 
 {% block left_navi %}
-    <li class="layui-nav-item"><a href="javascript:;">课程选择</a></li>
+    <li class="layui-nav-item"><a href="">课程选择</a></li>
     <li class="layui-nav-item"><a href="">选课结果</a></li>
 {% endblock %}
 
 {% block main-content %}
+    <table id="course_list" lay-filter="course_list"></table>
+{% endblock %}
 
+{% block scripts %}
+    <script type="text/html" id="toolbar">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="select">选择课程</button>
+        </div>
+    </script>
+    <script>
+        layui.use('table', function () {
+            var table = layui.table;
+
+            table.render({
+                elem: '#course_list',
+                height: 550,
+                url: {% url 'get_selectable_courses' %},
+                page: true,
+                cellMinWidth: 100,
+                toolbar: '#toolbar',
+                cols: [[
+                    {type: 'radio'},
+                    {field: 'cid', title: '课程代码', width: 120, sort: true},
+                    {field: 'cname', title: '课程名称', width: 120},
+                    {field: 'fname', title: '开课学院', width: 120},
+                    {field: 'tname', title: '授课教师', width: 120},
+                    {field: 'cinfo', title: '课程简介'}
+                ]]
+            })
+
+            table.on('toolbar(course_list)', function (obj) {
+                var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
+                var data = checkStatus.data;
+                if (data.length < 1) {
+                    layer.alert("请选择课程");
+                    return false;
+                }
+                switch (obj.event) {
+                    case 'select':
+                        layer.confirm('确认选择该课程吗？', {icon: 3, title:'提示'}, function (index) {
+                            $.ajax({
+                                url: '{% url 'course_selected' %}',
+                                type: 'POST',
+                                headers: {"X-CSRFToken": csrftoken},
+                                data: {
+                                    cid: data[0].cid
+                                },
+                                success: function(response) {
+                                    if (response === 'success') {
+                                        layer.close();
+                                        layer.msg("选课成功", {icon: 6});
+                                        table.reload('course_list');
+                                    } else {
+                                        layer.close();
+                                        console.log(response)
+                                        layer.msg("选课失败", {icon: 5});
+                                    }
+                                }
+                            });
+                        });
+                        break;
+                }
+            });
+        })
+    </script>
 {% endblock %}
