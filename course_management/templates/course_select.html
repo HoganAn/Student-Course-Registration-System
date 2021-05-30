@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block left_navi %}
-    <li class="layui-nav-item"><a href="javascript:course_select()">课程选择</a></li>
-    <li class="layui-nav-item"><a href="javascript:select_stat()">选课结果</a></li>
+    <li class="layui-nav-item"><a href="javascript:course_select();">课程选择</a></li>
+    <li class="layui-nav-item"><a href="javascript:select_stat();">选课结果</a></li>
 {% endblock %}
 
 {% block main-content %}
@@ -47,32 +47,32 @@
                     var checkStatus = table.checkStatus(obj.config.id); //获取选中行状态
                     var data = checkStatus.data;
                     if (data.length < 1) {
-                        layer.alert("请选择课程");
-                        return false;
-                    }
-                    switch (obj.event) {
-                        case 'select':
-                            layer.confirm('确认选择该课程吗？', {icon: 3, title: '提示'}, function (index) {
-                                $.ajax({
-                                    url: '{% url 'course_selected' %}',
-                                    type: 'POST',
-                                    headers: {"X-CSRFToken": csrftoken},
-                                    data: {
-                                        cid: data[0].cid
-                                    },
-                                    success: function (response) {
-                                        if (response === 'success') {
-                                            layer.close();
-                                            layer.msg("选课成功", {icon: 6});
-                                            table.reload('course_list');
-                                        } else {
-                                            layer.close();
-                                            layer.msg("选课失败", {icon: 5});
+                        layer.msg("请选择课程", {icon: 5, time: 1000});
+                    } else {
+                        switch (obj.event) {
+                            case 'select':
+                                layer.confirm('确认选择该课程吗？', {icon: 3, title: '提示'}, function (index) {
+                                    $.ajax({
+                                        url: '{% url 'course_selected' %}',
+                                        type: 'POST',
+                                        headers: {"X-CSRFToken": csrftoken},
+                                        data: {
+                                            cid: data[0].cid
+                                        },
+                                        success: function (response) {
+                                            if (response === 'success') {
+                                                layer.close();
+                                                layer.msg("选课成功", {icon: 6});
+                                                table.reload('course_list');
+                                            } else {
+                                                layer.close();
+                                                layer.msg("选课失败", {icon: 5});
+                                            }
                                         }
-                                    }
+                                    });
                                 });
-                            });
-                            break;
+                                break;
+                        }
                     }
                 });
             });
