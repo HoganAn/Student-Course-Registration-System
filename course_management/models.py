@@ -8,7 +8,7 @@ class Prerequisite(models.Model):
     pre_course_id = models.CharField(max_length=15, verbose_name='先修课程代码')
 
     def __str__(self):
-        return self.pre_course_id
+        return Course.objects.get(course_id=self.pre_course_id).course_name
 
 
 class Course(models.Model):

@@ -60,13 +60,16 @@
                                             cid: data[0].cid
                                         },
                                         success: function (response) {
-                                            if (response === 'success') {
+                                            if (response === 'Success') {
                                                 layer.close();
-                                                layer.msg("选课成功", {icon: 6});
+                                                layer.msg("选课成功！", {icon: 6});
                                                 table.reload('course_list');
+                                            } else if (response === 'UnmetRequirement'){
+                                                layer.close();
+                                                layer.msg("您没有学习该课程的先修课程，不能进行选课！", {icon: 5});
                                             } else {
                                                 layer.close();
-                                                layer.msg("选课失败", {icon: 5});
+                                                layer.msg("选课失败！", {icon: 5});
                                             }
                                         }
                                     });

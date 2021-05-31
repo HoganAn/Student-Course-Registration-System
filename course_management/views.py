@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import render
 from django.core import serializers
-from course_management.models import Course, CourseRegistration
+from course_management.models import Course, CourseRegistration, Prerequisite
 from login.models import Student
 import json
 
@@ -73,8 +73,16 @@ def course_selected(request):
         uid = request.session.get('uid')
         course = Course.objects.get(course_id=cid)
         stu = Student.objects.get(uid=uid)
+        pre_courses = course.prerequisite.all()
+        for pc in pre_courses:
+            stat = Course.objects.filter(course_id=pc.pre_course_id,
+                                         reg_stat__uid=uid,
+                                         courseregistration__is_joined='1')
+            if len(stat) == 0:
+                return HttpResponse('UnmetRequirement')
+
         course.reg_stat.add(stu, through_defaults={'is_joined': '0'})
-        return HttpResponse('success')
+        return HttpResponse('Success')
     else:
         return HttpResponse(status=405)
 
