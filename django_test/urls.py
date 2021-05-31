@@ -31,8 +31,10 @@ urlpatterns = [
     path('personnel_info/', views.personnel_info, name="personnel_info"),
     path('course_select/', cmViews.cs_view, name="course_select"),
     path('course_selected/', cmViews.course_selected, name="course_selected"),
+    path('my_course/', cmViews.my_course_view, name="my_course"),
 
     # Data interface
     path('get_selectable_courses/', cmViews.get_selectable_courses, name="get_selectable_courses"),
-    path('get_select_stat/', cmViews.get_select_stat, name="get_select_stat")
+    path('get_select_stat/', cmViews.get_select_stat, name="get_select_stat"),
+    path('get_my_course_list/', cmViews.get_my_course_list, name="get_my_course_list"),
 ]

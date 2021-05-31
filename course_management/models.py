@@ -17,9 +17,17 @@ class Course(models.Model):
     lecturer = models.ForeignKey(login.models.Teacher, on_delete=models.CASCADE, verbose_name="授课教师")
     prerequisite = models.ManyToManyField(Prerequisite, blank=True)
     reg_stat = models.ManyToManyField(login.models.Student, through='CourseRegistration')
+    stu_score = models.ManyToManyField(login.models.Student, through='StuScore',
+                                       related_name="cm_%(class)s_related")
 
 
 class CourseRegistration(models.Model):
     stu = models.ForeignKey(login.models.Student, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     is_joined = models.CharField(max_length=1, verbose_name="选课状态", default='0')
+
+
+class StuScore(models.Model):
+    stu = models.ForeignKey(login.models.Student, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    score = models.IntegerField(verbose_name="课程成绩")

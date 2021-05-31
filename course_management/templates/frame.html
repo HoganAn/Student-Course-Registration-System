@@ -21,7 +21,7 @@
             <li class="layui-nav-item layui-hide-xs"><a href="{% url 'index' %}">主页</a></li>
             {% if usr_type == 'student' %}
                 <li class="layui-nav-item layui-hide-xs"><a href="{% url 'course_select' %}">选课</a></li>
-                <li class="layui-nav-item layui-hide-xs"><a href="">个人课程</a></li>
+                <li class="layui-nav-item layui-hide-xs"><a href="{% url 'my_course' %}">个人课程</a></li>
             {% elif usr_type == 'teacher' %}
                 <li class="layui-nav-item layui-hide-xs"><a href="">课程管理</a></li>
             {% endif %}
