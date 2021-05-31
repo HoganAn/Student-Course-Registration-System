@@ -11,7 +11,7 @@ class Person(models.Model):
     )
 
     name = models.CharField(max_length=10, verbose_name="姓名")
-    gender = models.CharField(max_length=10, choices=sex, default="男")
+    gender = models.CharField(max_length=10, choices=sex, default="男", verbose_name='性别')
     faculty = models.CharField(max_length=20, verbose_name="学院")
     email = models.EmailField(max_length=50, verbose_name="邮箱")
     password = models.CharField(max_length=32, verbose_name="密码")
@@ -28,9 +28,15 @@ class Student(Person):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name_plural = '学生'
+
 
 class Teacher(Person):
     uid = models.CharField(max_length=12, verbose_name="教工号", unique=True)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = '教师'
