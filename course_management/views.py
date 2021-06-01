@@ -1,9 +1,7 @@
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import render
-from django.core import serializers
-from course_management.models import Course, CourseRegistration, Prerequisite
+from course_management.models import Course, CourseRegistration
 from login.models import Student
-import json
 
 
 def cs_view(request):
@@ -91,11 +89,22 @@ def my_course_view(request):
     if request.method == 'GET':
         if not request.session.get('is_login'):
             return HttpResponseRedirect('/index/')
-
         uid = request.session.get('uid')
         usr_type = request.session.get('usr_type')
         usr_name = request.session.get('name')
         return render(request, "my_course.html", locals())
+
+
+def course_info_view(request, course_id):
+    if request.method == 'GET':
+        if not request.session.get('is_login'):
+            return HttpResponseRedirect('/index/')
+    uid = request.session.get('uid')
+    usr_type = request.session.get('usr_type')
+    usr_name = request.session.get('name')
+    cname = Course.objects.get(course_id=course_id)
+    cid = course_id
+    return render(request, "course_info.html", locals())
 
 
 def get_my_course_list(request):

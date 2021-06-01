@@ -35,7 +35,7 @@
             });
 
             table.on('row(course_list)', function (obj) {
-                console.log(obj.data);
+                window.location.href = {% url 'my_course' %} + obj.data.cid.toString();
             });
         });
     </script>

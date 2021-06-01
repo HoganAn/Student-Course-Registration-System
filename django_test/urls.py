@@ -13,7 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
 from . import views
@@ -32,6 +31,7 @@ urlpatterns = [
     path('course_select/', cmViews.cs_view, name="course_select"),
     path('course_selected/', cmViews.course_selected, name="course_selected"),
     path('my_course/', cmViews.my_course_view, name="my_course"),
+    path('my_course/<slug:course_id>', cmViews.course_info_view, name="course_info"),
 
     # Data interface
     path('get_selectable_courses/', cmViews.get_selectable_courses, name="get_selectable_courses"),
