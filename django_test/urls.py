@@ -23,7 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.temp),
     path('index/', views.index, name="index"),
-    path('hello/', views.hello),
     path('login/', loginViews.login_view, name="login"),
     path('signout/', loginViews.logout_view, name="logout"),
     path('signup/', loginViews.reg_view, name="signup"),
@@ -31,10 +30,15 @@ urlpatterns = [
     path('course_select/', cmViews.cs_view, name="course_select"),
     path('course_selected/', cmViews.course_selected, name="course_selected"),
     path('my_course/', cmViews.my_course_view, name="my_course"),
-    path('my_course/<slug:course_id>', cmViews.course_info_view, name="course_info"),
+    path('my_course/score', cmViews.my_score_view, name="my_score"),
+    path('my_course/<slug:course_id>', cmViews.course_index_view, name="course_info"),
+    path('my_course/<slug:course_id>/intro', cmViews.course_intro_view, name="course_intro"),
+    path('course_manage/', cmViews.t_course_manage_view, name="t_course_manage"),
+    path('course_manage/<slug:course_id>', cmViews.t_course_index_view, name="t_course_index"),
 
     # Data interface
     path('get_selectable_courses/', cmViews.get_selectable_courses, name="get_selectable_courses"),
     path('get_select_stat/', cmViews.get_select_stat, name="get_select_stat"),
     path('get_my_course_list/', cmViews.get_my_course_list, name="get_my_course_list"),
+    path('get_t_my_course_list/', cmViews.get_t_my_course_list, name="get_t_my_course_list"),
 ]

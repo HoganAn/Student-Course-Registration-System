@@ -1,0 +1,14 @@
+{% extends 'frame.html' %}
+
+{% block left_navi %}
+    <li class="layui-nav-item"><a href="{% url 't_course_manage' %}">我的课程</a></li>
+{% endblock %}
+
+{% block main-content %}
+    <fieldset class="layui-elem-field">
+        <legend>{% block curr_page_legend %}{% endblock %}</legend>
+        <div class="layui-field-box">
+            {% block course_main_content %}{% endblock %}
+        </div>
+    </fieldset>
+{% endblock %}

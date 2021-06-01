@@ -1,15 +1,10 @@
-{% extends 'frame.html' %}
+{% extends 't_course_templ.html' %}
 
-{% block title %}
-    我的课程
-{% endblock %}
+{% block title %}课程管理{% endblock %}
 
-{% block left_navi %}
-    <li class="layui-nav-item"><a href={% url 'my_course' %}>课程查看</a></li>
-    <li class="layui-nav-item"><a href={% url 'my_score' %}>个人成绩</a></li>
-{% endblock %}
+{% block curr_page_legend %}我的课程{% endblock %}
 
-{% block main-content %}
+{% block course_main_content %}
     <div id="course_table">
         <table id="course_list" lay-filter="course_list"></table>
     </div>
@@ -19,23 +14,22 @@
     <script>
         layui.use('table', function () {
             var table = layui.table;
+
             table.render({
                 elem: '#course_list',
                 height: 700,
-                url: {% url 'get_my_course_list' %},
+                url: {% url 'get_t_my_course_list' %},
                 page: true,
                 cellMinWidth: 100,
                 cols: [[
                     {field: 'cid', title: '课程代码', width: 120, sort: true},
                     {field: 'cname', title: '课程名称', width: 120},
                     {field: 'fname', title: '开课学院', width: 120},
-                    {field: 'tname', title: '授课教师', width: 120},
-                    {field: 'cinfo', title: '课程简介'}
                 ]]
             });
 
             table.on('row(course_list)', function (obj) {
-                window.location.href = {% url 'my_course' %} + obj.data.cid.toString();
+                window.location.href = {% url 't_course_manage' %} + obj.data.cid.toString();
             });
         });
     </script>

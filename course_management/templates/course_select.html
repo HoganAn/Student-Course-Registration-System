@@ -64,7 +64,7 @@
                                                 layer.close();
                                                 layer.msg("选课成功！", {icon: 6});
                                                 table.reload('course_list');
-                                            } else if (response === 'UnmetRequirement'){
+                                            } else if (response === 'UnmetRequirement') {
                                                 layer.close();
                                                 layer.msg("您没有学习该课程的先修课程，不能进行选课！", {icon: 5});
                                             } else {
@@ -91,6 +91,10 @@
                     url: '{% url 'get_select_stat' %}',
                     page: true,
                     cellMinWidth: 100,
+                    initSort: {
+                        field: 'cstat',
+                        type: 'desc'
+                    },
                     cols: [[
                         {field: 'cid', title: '课程代码', width: 120, sort: true},
                         {field: 'cname', title: '课程名称', width: 120},

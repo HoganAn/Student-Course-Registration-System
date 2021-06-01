@@ -1,0 +1,23 @@
+{% extends 'frame.html' %}
+
+{% block title %}
+    {{ cname }} —— {% block curr_page_title %}{% endblock %}
+{% endblock %}
+
+{% block left_navi %}
+{% comment %}    <li class="layui-nav-item"><a href={% url 'my_course' %}>课程查看</a></li>
+    <li class="layui-nav-item"><a href="javascript:;">个人成绩</a></li>{% endcomment %}
+    <li class="layui-nav-item"><a href="{% url 'course_info' cid %}">课程首页</a></li>
+    <li class="layui-nav-item"><a href="{% url 'course_intro' cid %}">课程简介</a></li>
+    <li class="layui-nav-item"><a href="javascript:;">课件资料</a></li>
+    <li class="layui-nav-item"><a href="javascript:;">聊天答疑</a></li>
+{% endblock %}
+
+{% block main-content %}
+    <fieldset class="layui-elem-field">
+        <legend>{{ cname }} —— {% block curr_page_legend %}{% endblock %}</legend>
+        <div class="layui-field-box">
+            {% block course_info_content %}{% endblock %}
+        </div>
+    </fieldset>
+{% endblock %}

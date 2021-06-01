@@ -1,23 +1,4 @@
-{% extends 'frame.html' %}
+{% extends 'course_index_templ.html' %}
 
-{% block title %}
-    {{ cname }}——课程信息
-{% endblock %}
-
-{% block left_navi %}
-{% comment %}    <li class="layui-nav-item"><a href={% url 'my_course' %}>课程查看</a></li>
-    <li class="layui-nav-item"><a href="javascript:;">个人成绩</a></li>{% endcomment %}
-    <li class="layui-nav-item"><a href="{% url 'course_info' cid %}">课程首页</a></li>
-    <li class="layui-nav-item"><a href="javascript:;">课程简介</a></li>
-    <li class="layui-nav-item"><a href="javascript:;">课件资料</a></li>
-    <li class="layui-nav-item"><a href="javascript:;">聊天答疑</a></li>
-{% endblock %}
-
-{% block main-content %}
-    <fieldset class="layui-elem-field">
-        <legend>{{ cname }}</legend>
-        <div class="layui-field-box">
-            内容区域
-        </div>
-    </fieldset>
-{% endblock %}
+{% block curr_page_title %}课程首页{% endblock %}
+{% block curr_page_legend %}课程首页{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'frame.html' %}
+
+{% block title %}
+    我的成绩
+{% endblock %}
+
+{% block left_navi %}
+    <li class="layui-nav-item"><a href={% url 'my_course' %}>课程查看</a></li>
+    <li class="layui-nav-item"><a href={% url 'my_score' %}>个人成绩</a></li>
+{% endblock %}

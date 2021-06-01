@@ -95,7 +95,7 @@ def my_course_view(request):
         return render(request, "my_course.html", locals())
 
 
-def course_info_view(request, course_id):
+def course_index_view(request, course_id):
     if request.method == 'GET':
         if not request.session.get('is_login'):
             return HttpResponseRedirect('/index/')
@@ -105,6 +105,51 @@ def course_info_view(request, course_id):
     cname = Course.objects.get(course_id=course_id)
     cid = course_id
     return render(request, "course_info.html", locals())
+
+
+def course_intro_view(request, course_id):
+    if request.method == 'GET':
+        if not request.session.get('is_login'):
+            return HttpResponseRedirect('/index/')
+    uid = request.session.get('uid')
+    usr_type = request.session.get('usr_type')
+    usr_name = request.session.get('name')
+    course = Course.objects.get(course_id=course_id)
+    cname = course.course_name
+    cid = course_id
+    course_intro = course.info
+    return render(request, "course_intro.html", locals())
+
+
+def my_score_view(request):
+    if request.method == 'GET':
+        if not request.session.get('is_login'):
+            return HttpResponseRedirect('/index/')
+    uid = request.session.get('uid')
+    usr_type = request.session.get('usr_type')
+    usr_name = request.session.get('name')
+    return render(request, "my_score.html", locals())
+
+
+def t_course_manage_view(request):
+    if request.method == 'GET':
+        if not request.session.get('is_login'):
+            return HttpResponseRedirect('/index/')
+    uid = request.session.get('uid')
+    usr_type = request.session.get('usr_type')
+    usr_name = request.session.get('name')
+    return render(request, "t_my_course.html", locals())
+
+
+def t_course_index_view(request, course_id):
+    if request.method == 'GET':
+        if not request.session.get('is_login'):
+            return HttpResponseRedirect('/index/')
+    uid = request.session.get('uid')
+    usr_type = request.session.get('usr_type')
+    usr_name = request.session.get('name')
+    cname = Course.objects.get(course_id=course_id)
+    return render(request, "t_course_index.html", locals())
 
 
 def get_my_course_list(request):
@@ -120,6 +165,30 @@ def get_my_course_list(request):
                 'fname': c.faculty,
                 'tname': c.lecturer.name,
                 'cinfo': c.info
+            }
+            course_info.append(data)
+
+        data = {
+            'code': 0,
+            'count': total,
+            'data': course_info
+        }
+        return JsonResponse(data)
+    else:
+        return HttpResponse(status=403)
+
+
+def get_t_my_course_list(request):
+    if request.method == 'GET':
+        uid = request.session.get('uid')
+        courses = Course.objects.filter(lecturer__uid=uid)
+        total = courses.count()
+        course_info = []
+        for c in courses:
+            data = {
+                'cid': c.course_id,
+                'cname': c.course_name,
+                'fname': c.faculty,
             }
             course_info.append(data)
 
