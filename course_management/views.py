@@ -152,6 +152,17 @@ def t_course_index_view(request, course_id):
     return render(request, "t_course_index.html", locals())
 
 
+def t_course_file_view(request, course_id):
+    if request.method == 'GET':
+        if not request.session.get('is_login'):
+            return HttpResponseRedirect('/index/')
+    uid = request.session.get('uid')
+    usr_type = request.session.get('usr_type')
+    usr_name = request.session.get('name')
+    cname = Course.objects.get(course_id=course_id)
+    return render(request, "t_course_file_manage.html", locals())
+
+
 def get_my_course_list(request):
     if request.method == 'GET':
         uid = request.session.get('uid')

@@ -23,7 +23,7 @@
                 <li class="layui-nav-item layui-hide-xs"><a href="{% url 'course_select' %}">选课</a></li>
                 <li class="layui-nav-item layui-hide-xs"><a href="{% url 'my_course' %}">个人课程</a></li>
             {% elif usr_type == 'teacher' %}
-                <li class="layui-nav-item layui-hide-xs"><a href="">课程管理</a></li>
+                <li class="layui-nav-item layui-hide-xs"><a href={% url 't_course_manage' %}>课程管理</a></li>
             {% endif %}
         </ul>
         <ul class="layui-nav layui-layout-right">

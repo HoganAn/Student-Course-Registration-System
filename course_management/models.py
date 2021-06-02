@@ -1,7 +1,15 @@
 from django.db import models
+import os
+import uuid
 
 # Create your models here.
 import login.models
+
+
+def course_dir_path(instance, filename):
+    ext = filename.split('.')[-1]
+    filename = '{}.{}'.format(uuid.uuid4().hex[:10], ext)
+    return os.path.join(instance.course.course_id, filename)
 
 
 class Prerequisite(models.Model):
@@ -9,6 +17,18 @@ class Prerequisite(models.Model):
 
     def __str__(self):
         return Course.objects.get(course_id=self.pre_course_id).course_name
+
+
+class CourseFiles(models.Model):
+    add_date = models.DateTimeField(auto_now_add=True, verbose_name="上传时间")
+    file = models.FileField(upload_to=course_dir_path, verbose_name="课程文件")
+    course = models.ForeignKey("Course", on_delete=models.CASCADE, verbose_name="课程名称")
+
+    def __str__(self):
+        return self.course.course_name + "_" + self.file.name
+
+    class Meta:
+        verbose_name_plural = '课件资料'
 
 
 class Course(models.Model):

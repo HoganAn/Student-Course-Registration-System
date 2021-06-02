@@ -1,0 +1,36 @@
+{% extends 't_course_index.html' %}
+
+{% block curr_page_legend_detail %} —— 课件管理{% endblock %}
+
+{% block course_main_content %}
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>课件上传</legend>
+        <div class="layui-field-box">
+            <button type="button" class="layui-btn" id="upload-btn">
+                <i class="layui-icon">&#xe67c;</i>文件上传
+            </button>
+        </div>
+    </fieldset>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>课件列表</legend>
+    </fieldset>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        layui.use('upload', function () {
+            var upload = layui.upload;
+
+            var uploadInst = upload.render({
+                elem: '#upload-btn'
+                , url: '/upload/'
+                , accept: 'file'
+                , done: function (res) {
+                    layer.msg("上传成功", {icon: 6});
+                }
+                , error: function () {
+                }
+            });
+        });
+    </script>
+{% endblock %}

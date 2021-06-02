@@ -1,0 +1,12 @@
+{% extends 't_course_templ.html' %}
+
+{% block title %}{{ cname }}{% endblock %}
+
+{% block curr_page_legend %}{{ cname }}{% block curr_page_legend_detail %}{% endblock %}{% endblock %}
+
+{% block left_navi %}
+    <li class="layui-nav-item"><a href={% url 't_course_manage' %}>我的课程</a></li>
+    <li class="layui-nav-item"><a href="">课程信息</a></li>
+    <li class="layui-nav-item"><a href={% url 't_course_file' course_id %}>课件管理</a></li>
+    <li class="layui-nav-item"><a href="">联系学生</a></li>
+{% endblock %}

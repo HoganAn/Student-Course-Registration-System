@@ -34,7 +34,8 @@ urlpatterns = [
     path('my_course/<slug:course_id>', cmViews.course_index_view, name="course_info"),
     path('my_course/<slug:course_id>/intro', cmViews.course_intro_view, name="course_intro"),
     path('course_manage/', cmViews.t_course_manage_view, name="t_course_manage"),
-    path('course_manage/<slug:course_id>', cmViews.t_course_index_view, name="t_course_index"),
+    path('course_manage/<slug:course_id>/', cmViews.t_course_index_view, name="t_course_index"),
+    path('course_manage/<slug:course_id>/file_manage/', cmViews.t_course_file_view, name="t_course_file"),
 
     # Data interface
     path('get_selectable_courses/', cmViews.get_selectable_courses, name="get_selectable_courses"),
