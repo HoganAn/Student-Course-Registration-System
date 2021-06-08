@@ -5,28 +5,55 @@
 {% block course_main_content %}
     <fieldset class="layui-elem-field layui-field-title">
         <legend>课件上传</legend>
-        <div class="layui-field-box">
-            <button type="button" class="layui-btn" id="upload-btn">
-                <i class="layui-icon">&#xe67c;</i>文件上传
-            </button>
-        </div>
     </fieldset>
+    <div class="layui-field-box">
+        <button type="button" class="layui-btn" id="upload-btn">
+            <i class="layui-icon">&#xe67c;</i>文件上传
+        </button>
+    </div>
     <fieldset class="layui-elem-field layui-field-title">
         <legend>课件列表</legend>
     </fieldset>
+    <div class="layui-field-box">
+        <div class="file-table">
+            <table id="file_list" lay-filter="file_list"></table>
+        </div>
+    </div>
 {% endblock %}
 
 {% block scripts %}
     <script>
-        layui.use('upload', function () {
+        layui.use(['upload', 'table'], function () {
             var upload = layui.upload;
+
+            var table = layui.table;
+            table.render({
+                elem: '#file_list'
+                , url: {% url 'get_file_list' %}
+                , where: {cid: "{{ course_id }}"}
+                , height: 500
+                , cellMinWidth: 100
+                , initSort: {
+                    field: 'uptime'
+                    , type: 'desc'
+                }
+                , cols: [[
+                    {field: 'fname', title: '文件名称', width: 700, sort: true},
+                    {field: 'uptime', title: '上传时间', sort: true},
+                ]]
+            });
 
             var uploadInst = upload.render({
                 elem: '#upload-btn'
                 , url: '/upload/'
+                , headers: {"X-CSRFToken": csrftoken}
                 , accept: 'file'
+                , data: {
+                    cid: "{{ course_id }}"
+                }
                 , done: function (res) {
                     layer.msg("上传成功", {icon: 6});
+                    table.reload('file_list');
                 }
                 , error: function () {
                 }

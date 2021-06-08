@@ -1,0 +1,43 @@
+{% extends 'course_index_templ.html' %}
+
+{% block curr_page_title %}课件资料{% endblock %}
+{% block curr_page_legend %}课件资料{% endblock %}
+
+{% block course_info_content %}
+    <div class="layui-field-box">
+        <div class="file-table">
+            <table id="file_list" lay-filter="file_list"></table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        layui.use('table', function() {
+            var table = layui.table;
+
+            table.render({
+                elem: '#file_list'
+                , url: {% url 'get_file_list' %}
+                , where: {cid: "{{ course_id }}"}
+                , height: 600
+                , cellMinWidth: 100
+                , initSort: {
+                    field: 'uptime'
+                    , type: 'desc'
+                }
+                , cols: [[
+                    {field: 'fname', title: '文件名称', width: 700, sort: true},
+                    {field: 'uptime', title: '上传时间', sort: true},
+                ]]
+            });
+
+            table.on('row(file_list)', function(obj) {
+                let url = new URL('http://' + window.location.host + '/download');
+                url.searchParams.set('cid', '{{ course_id }}');
+                url.searchParams.append('fname', obj.data['fname']);
+                window.location.href = url;
+            });
+        })
+    </script>
+{% endblock %}
