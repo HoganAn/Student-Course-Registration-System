@@ -1,7 +1,15 @@
 from random import sample
+import matplotlib.pyplot as plt
+from PIL import Image
+from io import BytesIO
+import base64
 
 from django.contrib import admin
+from django.http import FileResponse
 from course_management.models import Course, CourseRegistration, StuScore, CourseFiles
+
+plt.rcParams['font.sans-serif'] = ['SimHei']
+plt.rcParams['axes.unicode_minus'] = False
 
 
 # Register your models here.
@@ -23,7 +31,7 @@ class StuScoreAdmin(admin.ModelAdmin):
 class CourseRegistrationAdmin(admin.ModelAdmin):
     list_display = ('stu', 'course', 'is_joined')
     list_filter = ('stu', 'course', 'is_joined')
-    actions = ['select_draw']
+    actions = ['select_draw', 'export']
 
     def select_draw(self, request, queryset):
         course_dict = {}
@@ -55,9 +63,35 @@ class CourseRegistrationAdmin(admin.ModelAdmin):
                     reg_stat.save()
         return True
 
+    def export(self, request, queryset):
+        course_dict = {}
+        course_list = []
+        count_list = []
+        for q in queryset:
+            course_dict[q.course.course_id] = []
+        for q in queryset:
+            course_dict[q.course.course_id].append(q.stu)
+        for course in course_dict:
+            course_list.append(course)
+            count_list.append(len(course_dict[course]))
+
+        fig = plt.figure()
+        plt.bar(course_list, count_list)
+        plt.title('选课人数统计')
+
+        # figfile = BytesIO()
+        fig.savefig('1.png')
+        f = open('1.png', 'rb')
+        response = FileResponse(f)
+        response['Content-Type'] = 'application/octet-stream'
+        response['Content-Disposition'] = 'attachment;filename="select_static.png"'
+        return response
+
     select_draw.short_description = '选课抽签'
     select_draw.confirm = "确定开始抽签吗？"
     select_draw.type = 'warning'
+
+    export.short_description = '导出柱状图'
 
 
 admin.site.register(CourseRegistration, CourseRegistrationAdmin)

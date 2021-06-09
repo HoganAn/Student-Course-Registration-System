@@ -9,5 +9,5 @@
     <li class="layui-nav-item"><a href={% url 't_course_notice' course_id %}>课程通知</a></li>
     <li class="layui-nav-item"><a href={% url 't_course_file' course_id %}>课件管理</a></li>
     <li class="layui-nav-item"><a href={% url 't_stu_manage' course_id %}>学生管理</a></li>
-    <li class="layui-nav-item"><a href="">联系学生</a></li>
+    <li class="layui-nav-item"><a href={% url 't_set_pre' course_id %}>设置先修课程</a></li>
 {% endblock %}

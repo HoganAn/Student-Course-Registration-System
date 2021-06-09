@@ -39,6 +39,7 @@ urlpatterns = [
     path('course_manage/<slug:course_id>/file_manage/', cmViews.t_course_file_view, name="t_course_file"),
     path('course_manage/<slug:course_id>/notice/', cmViews.t_course_notice_view, name="t_course_notice"),
     path('course_manage/<slug:course_id>/student_manage/', cmViews.t_course_stu_manage, name="t_stu_manage"),
+    path('course_manage/<slug:course_id>/set_pre', cmViews.t_set_pre_view, name="t_set_pre"),
 
     # Data interface
     path('get_selectable_courses/', cmViews.get_selectable_courses, name="get_selectable_courses"),
@@ -49,5 +50,8 @@ urlpatterns = [
     path('upload/', cmViews.upload, name="upload"),
     path('get_file_list/', cmViews.get_course_file_list, name="get_file_list"),
     path('download/', cmViews.download, name="download"),
-    path('edit_score/', cmViews.edit_score, name="edit_score")
+    path('edit_score/', cmViews.edit_score, name="edit_score"),
+    path('get_unpre', cmViews.t_get_unpre, name="get_unpre"),
+    path('set_pre/', cmViews.t_set_pre, name="set_pre"),
+    path('get_my_score/', cmViews.get_my_score, name="get_my_score")
 ]

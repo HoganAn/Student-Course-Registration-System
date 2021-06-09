@@ -8,3 +8,30 @@
     <li class="layui-nav-item"><a href={% url 'my_course' %}>课程查看</a></li>
     <li class="layui-nav-item"><a href={% url 'my_score' %}>个人成绩</a></li>
 {% endblock %}
+
+{% block main-content %}
+    <div id="course_table">
+        <table id="course_list" lay-filter="course_list"></table>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        layui.use('table', function () {
+            var table = layui.table;
+            table.render({
+                elem: '#course_list',
+                height: 700,
+                url: {% url 'get_my_score' %},
+                cellMinWidth: 100,
+                cols: [[
+                    {field: 'cid', title: '课程代码', width: 120, sort: true},
+                    {field: 'cname', title: '课程名称', width: 120},
+                    {field: 'fname', title: '开课学院', width: 120},
+                    {field: 'tname', title: '授课教师', width: 120},
+                    {field: 'score', title: '课程成绩'}
+                ]]
+            });
+        });
+    </script>
+{% endblock %}
