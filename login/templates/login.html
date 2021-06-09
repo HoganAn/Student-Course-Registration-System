@@ -44,7 +44,7 @@
             height: 400px;
             position: absolute;
             left: 50%;
-            top: 40%;
+            top: 35%;
             margin-left: -180px;
             margin-top: -100px;
         }
@@ -86,10 +86,6 @@
         .login-form .layui-form-item input {
             padding-left: 36px;
         }
-
-        .layui-form-radio {
-            margin-right: 5px;
-        }
     </style>
 </head>
 <body>
@@ -118,7 +114,6 @@
                     <div class="layui-input-block" style="margin-left:70px">
                         <input type="radio" name="usr_type" value="student" title="学生" checked>
                         <input type="radio" name="usr_type" value="teacher" title="教师">
-                        <input type="radio" name="usr_type" value="admin" title="管理员" disabled>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -128,6 +123,11 @@
             <a href="{% url 'signup' %}">
                 <button class="layui-btn layui-btn-primary layui-border-blue layui-btn-fluid">
                     注 册
+                </button>
+            </a>
+            <a href={% url 'admin:index' %}>
+                <button class="layui-btn layui-btn-primary layui-border-blue layui-btn-fluid" style="margin-top:15px">
+                    管理员入口
                 </button>
             </a>
         </div>

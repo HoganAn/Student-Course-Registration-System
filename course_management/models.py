@@ -38,6 +38,7 @@ class Course(models.Model):
     capacity = models.IntegerField(verbose_name='课程容量')
     faculty = models.CharField(max_length=20, verbose_name="开课学院")
     info = models.CharField(max_length=255, verbose_name="课程介绍", blank=True, default="暂无课程介绍")
+    notice = models.CharField(max_length=1000, verbose_name="课程通知", default="暂无课程通知")
     lecturer = models.ForeignKey(login.models.Teacher, on_delete=models.CASCADE, verbose_name="授课教师")
     prerequisite = models.ManyToManyField(Prerequisite, blank=True, verbose_name='先修课程')
     reg_stat = models.ManyToManyField(login.models.Student, through='CourseRegistration')

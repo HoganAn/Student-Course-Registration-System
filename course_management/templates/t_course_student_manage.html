@@ -1,0 +1,76 @@
+{% extends 't_course_index_templ.html' %}
+
+{% block curr_page_legend_detail %} —— 学生管理 {% endblock %}
+
+{% block course_main_content %}
+    <div class="layui-field-box">
+        <div class="file-table">
+            <table id="stu_list" lay-filter="stu_list"></table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/html" id="button">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">修改成绩</a>
+    </script>
+    <script>
+        layui.use('table', function () {
+            let table = layui.table;
+
+            table.render({
+                elem: '#stu_list'
+                , url: '{% url 'get_stu_list' %}'
+                , where: {cid: "{{ course_id }}"}
+                , height: 600
+                , cellMinWidth: 100
+                , toolbar: true
+                , initSort: {
+                    field: 'sid'
+                }
+                , cols: [[
+                    {field: 'sid', title: '学生学号', width: 150, sort: true}
+                    , {field: 'name', title: '学生姓名', width: 120, sort: true}
+                    , {field: 'score', title: '学生成绩', width: 120, sort: true}
+                    , {fixed: 'right', title: '操作', toolbar: '#button'}
+                ]]
+            });
+
+            table.on('tool(stu_list)', function (obj) {
+                let data = obj.data;
+                if (obj.event === 'edit') {
+                    layer.prompt({
+                        formType: 0,
+                        maxlength: 3,
+                        title: "成绩修改"
+                    }, function (value, index) {
+                        console.log(value);
+                        $.ajax({
+                            url: {% url 'edit_score' %},
+                            type: 'POST',
+                            headers: {"X-CSRFToken": csrftoken},
+                            data: {
+                                sid: data.sid,
+                                cid: '{{ course_id }}',
+                                score: value
+                            },
+                            success: function (response) {
+                                if (response === 'Success') {
+                                    layer.close(index);
+                                    layer.msg("修改成功！", {icon: 6, time: 1000});
+                                    table.reload('stu_list');
+                                } else if (response === 'RangeErr') {
+                                    layer.close(index);
+                                    layer.msg("成绩必须在0-100之间！", {icon: 5, time: 1000});
+                                } else {
+                                    layer.close(index);
+                                    layer.msg("修改失败！", {icon: 5, time: 1000});
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

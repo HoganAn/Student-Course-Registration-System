@@ -37,13 +37,17 @@ urlpatterns = [
     path('course_manage/', cmViews.t_course_manage_view, name="t_course_manage"),
     path('course_manage/<slug:course_id>/', cmViews.t_course_index_view, name="t_course_index"),
     path('course_manage/<slug:course_id>/file_manage/', cmViews.t_course_file_view, name="t_course_file"),
+    path('course_manage/<slug:course_id>/notice/', cmViews.t_course_notice_view, name="t_course_notice"),
+    path('course_manage/<slug:course_id>/student_manage/', cmViews.t_course_stu_manage, name="t_stu_manage"),
 
     # Data interface
     path('get_selectable_courses/', cmViews.get_selectable_courses, name="get_selectable_courses"),
     path('get_select_stat/', cmViews.get_select_stat, name="get_select_stat"),
     path('get_my_course_list/', cmViews.get_my_course_list, name="get_my_course_list"),
     path('get_t_my_course_list/', cmViews.get_t_my_course_list, name="get_t_my_course_list"),
+    path('get_t_stu_list/', cmViews.get_stu_list, name="get_stu_list"),
     path('upload/', cmViews.upload, name="upload"),
     path('get_file_list/', cmViews.get_course_file_list, name="get_file_list"),
-    path('download/', cmViews.download, name="download")
+    path('download/', cmViews.download, name="download"),
+    path('edit_score/', cmViews.edit_score, name="edit_score")
 ]

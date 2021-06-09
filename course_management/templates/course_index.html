@@ -1,0 +1,19 @@
+{% extends 'course_index_templ.html' %}
+
+{% block curr_page_title %}课程首页{% endblock %}
+{% block curr_page_legend %}课程首页{% endblock %}
+
+{% block course_info_content %}
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>课程通知</legend>
+    </fieldset>
+    <div class="layui-field-box">
+        {{ notice }}
+    </div>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>课程简介</legend>
+    </fieldset>
+    <div class="layui-field-box">
+        {{ intro }}
+    </div>
+{% endblock %}
