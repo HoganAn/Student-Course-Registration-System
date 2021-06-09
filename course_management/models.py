@@ -62,8 +62,8 @@ class CourseRegistration(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='课程')
     is_joined = models.CharField(max_length=1, verbose_name="选课状态", choices=status, default='未中签')
 
-    def __str__(self):
-        return self.course.course_name + ' --- ' + self.stu.name
+    # def __str__(self):
+    #     return self.course.course_name + ' --- ' + self.stu.name
 
     class Meta:
         verbose_name_plural = '学生选课'
