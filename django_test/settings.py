@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'django_test.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sscm_db',
-        'USER': 'root',
-        'PASSWORD': 'ASDF1105an',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
